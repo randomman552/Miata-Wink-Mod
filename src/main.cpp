@@ -1,9 +1,13 @@
 #include <Arduino.h>
+#include <PopupHeadlamp.h>
 
-const uint8_t LEFT_UP_PIN = 11;
-const uint8_t LEFT_DOWN_PIN = 10;
-const uint8_t RIGHT_UP_PIN = 9;
-const uint8_t RIGHT_DOWN_PIN = 8;
+#define LEFT_UP_PIN 11
+#define LEFT_DOWN_PIN 10
+#define RIGHT_UP_PIN 9
+#define RIGHT_DOWN_PIN 8
+
+PopupHeadlamp left(LEFT_UP_PIN, LEFT_DOWN_PIN);
+PopupHeadlamp right(RIGHT_UP_PIN, RIGHT_DOWN_PIN);
 
 void setup()
 {
@@ -19,23 +23,23 @@ void setup()
 
 void loop()
 {
-  digitalWrite(LEFT_UP_PIN, HIGH);
+  left.up();
   Serial.println("LEFT UP");
   delay(1000);
-  digitalWrite(LEFT_UP_PIN, LOW);
+  left.sleep();
 
-  digitalWrite(RIGHT_UP_PIN, HIGH);
+  right.up();
   Serial.println("RIGHT UP");
   delay(1000);
-  digitalWrite(RIGHT_UP_PIN, LOW);
+  right.sleep();
 
-  digitalWrite(LEFT_DOWN_PIN, HIGH);
+  left.down();
   Serial.println("LEFT DOWN");
   delay(1000);
-  digitalWrite(LEFT_DOWN_PIN, LOW);
+  left.sleep();
 
-  digitalWrite(RIGHT_DOWN_PIN, HIGH);
+  right.down();
   Serial.println("RIGHT DOWN");
   delay(1000);
-  digitalWrite(RIGHT_DOWN_PIN, LOW);
+  right.sleep();
 }
