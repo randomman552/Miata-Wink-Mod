@@ -1,18 +1,25 @@
-#include "PopupHeadlamp.h"
+#include "Popup.h"
 
-void PopupHeadlamp::up()
+void Popup::setup()
+{
+    // Configure IO
+    pinMode(_upPin, OUTPUT);
+    pinMode(_downPin, OUTPUT);
+}
+
+void Popup::up()
 {
     digitalWrite(_downPin, LOW);
     digitalWrite(_upPin, HIGH);
 }
 
-void PopupHeadlamp::down()
+void Popup::down()
 {
     digitalWrite(_upPin, LOW);
     digitalWrite(_downPin, HIGH);
 }
 
-void PopupHeadlamp::sleep()
+void Popup::sleep()
 {
     digitalWrite(_upPin, LOW);
     digitalWrite(_downPin, LOW);

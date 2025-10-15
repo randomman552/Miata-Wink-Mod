@@ -1,17 +1,22 @@
 #include <Arduino.h>
 
-class PopupHeadlamp
+class Popup
 {
 private:
     uint8_t _upPin;
     uint8_t _downPin;
 
 public:
-    PopupHeadlamp(uint8_t upPin, uint8_t downPin)
+    Popup(uint8_t upPin, uint8_t downPin)
     {
         _upPin = upPin;
         _downPin = downPin;
     }
+
+    /**
+     * @brief Setup this cotrol
+     */
+    void setup();
 
     /**
      * @brief Put the headlamp up
