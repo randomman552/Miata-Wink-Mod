@@ -20,23 +20,4 @@ void setup()
 
 void loop()
 {
-  leftPopup.up();
-  Serial.println("LEFT UP");
-  delay(1000);
-  leftPopup.sleep();
-
-  rightPopup.up();
-  Serial.println("RIGHT UP");
-  delay(1000);
-  rightPopup.sleep();
-
-  leftPopup.down();
-  Serial.println("LEFT DOWN");
-  delay(1000);
-  leftPopup.sleep();
-
-  rightPopup.down();
-  Serial.println("RIGHT DOWN");
-  delay(1000);
-  rightPopup.sleep();
 }
