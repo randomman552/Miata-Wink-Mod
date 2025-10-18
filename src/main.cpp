@@ -6,13 +6,22 @@
 #define RIGHT_UP_PIN 9
 #define RIGHT_DOWN_PIN 8
 
-Popup leftPopup(LEFT_UP_PIN, LEFT_DOWN_PIN);
-Popup rightPopup(RIGHT_UP_PIN, RIGHT_DOWN_PIN);
+// Create IO
+DigitalIO leftUpIO(LEFT_UP_PIN);
+DigitalIO leftDownIO(LEFT_DOWN_PIN);
+DigitalIO rightUpIO(RIGHT_UP_PIN);
+DigitalIO rightDownIO(RIGHT_DOWN_PIN);
+
+// Create hardware control objects
+Popup leftPopup(&leftUpIO, &leftDownIO);
+Popup rightPopup(&rightUpIO, &rightDownIO);
 
 void setup()
 {
-  leftPopup.setup();
-  rightPopup.setup();
+  leftUpIO.setup();
+  leftDownIO.setup();
+  rightUpIO.setup();
+  rightDownIO.setup();
 
   // Start serial
   Serial.begin(9600);

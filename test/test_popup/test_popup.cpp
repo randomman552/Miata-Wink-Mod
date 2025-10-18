@@ -7,31 +7,38 @@
 #define RIGHT_UP_PIN 9
 #define RIGHT_DOWN_PIN 8
 
-Popup leftPopup(LEFT_UP_PIN, LEFT_DOWN_PIN);
-Popup rightPopup(RIGHT_UP_PIN, RIGHT_DOWN_PIN);
+// Create IO
+DigitalIO leftUpIO(LEFT_UP_PIN);
+DigitalIO leftDownIO(LEFT_DOWN_PIN);
+DigitalIO rightUpIO(RIGHT_UP_PIN);
+DigitalIO rightDownIO(RIGHT_DOWN_PIN);
+
+// Create hardware control objects
+Popup leftPopup(&leftUpIO, &leftDownIO);
+Popup rightPopup(&rightUpIO, &rightDownIO);
 
 void test_up(Popup *lamp)
 {
     lamp->up();
     delay(2000);
-    TEST_ASSERT_EQUAL(HIGH, digitalRead(lamp->_upPin));
-    TEST_ASSERT_EQUAL(LOW, digitalRead(lamp->_downPin));
+    TEST_ASSERT_EQUAL(HIGH, lamp->upPin->read());
+    TEST_ASSERT_EQUAL(LOW, lamp->downPin->read());
 }
 
 void test_down(Popup *lamp)
 {
     lamp->down();
     delay(2000);
-    TEST_ASSERT_EQUAL(HIGH, digitalRead(lamp->_downPin));
-    TEST_ASSERT_EQUAL(LOW, digitalRead(lamp->_upPin));
+    TEST_ASSERT_EQUAL(LOW, lamp->upPin->read());
+    TEST_ASSERT_EQUAL(HIGH, lamp->downPin->read());
 }
 
 void test_sleep(Popup *lamp)
 {
     lamp->sleep();
     delay(2000);
-    TEST_ASSERT_EQUAL(LOW, digitalRead(lamp->_downPin));
-    TEST_ASSERT_EQUAL(LOW, digitalRead(lamp->_upPin));
+    TEST_ASSERT_EQUAL(LOW, lamp->upPin->read());
+    TEST_ASSERT_EQUAL(LOW, lamp->downPin->read());
 }
 
 void test_left_up()
@@ -66,8 +73,10 @@ void test_right_sleep()
 
 void setup()
 {
-    leftPopup.setup();
-    rightPopup.setup();
+    leftUpIO.setup();
+    leftDownIO.setup();
+    rightUpIO.setup();
+    rightDownIO.setup();
 
     UNITY_BEGIN();
 }

@@ -1,25 +1,18 @@
 #include <Arduino.h>
+#include "IO.h"
 
+/**
+ * @brief Class defining a popup headlamp and it's interactions
+ */
 class Popup
 {
 public:
-    uint8_t _upPin;
-    uint8_t _downPin;
+    DigitalIO *upPin;
+    DigitalIO *downPin;
 
-    Popup(uint8_t upPin, uint8_t downPin)
+    Popup(DigitalIO *upPin, DigitalIO *downPin)
+        : upPin(upPin), downPin(downPin)
     {
-        _upPin = upPin;
-        _downPin = downPin;
-    }
-
-    /**
-     * @brief Setup this cotrol
-     */
-    void setup()
-    {
-        // Configure IO
-        pinMode(_upPin, OUTPUT);
-        pinMode(_downPin, OUTPUT);
     }
 
     /**
@@ -27,8 +20,8 @@ public:
      */
     void up()
     {
-        digitalWrite(_downPin, LOW);
-        digitalWrite(_upPin, HIGH);
+        downPin->off();
+        upPin->on();
     }
 
     /**
@@ -36,8 +29,8 @@ public:
      */
     void down()
     {
-        digitalWrite(_upPin, LOW);
-        digitalWrite(_downPin, HIGH);
+        upPin->off();
+        downPin->on();
     }
 
     /**
@@ -46,7 +39,7 @@ public:
      */
     void sleep()
     {
-        digitalWrite(_upPin, LOW);
-        digitalWrite(_downPin, LOW);
+        upPin->off();
+        downPin->off();
     }
 };
