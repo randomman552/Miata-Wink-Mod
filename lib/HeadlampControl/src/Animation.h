@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include "Popup.h"
 
+#ifndef ANIMATION_H
+#define ANIMATION_H
+
 #define LIGHT_MOVE_DURATION_MS 2000
 
 /**
@@ -8,6 +11,7 @@
  */
 class Animation
 {
+public:
     /**
      * @brief Run the animation
      */
@@ -88,3 +92,5 @@ public:
         delay(LIGHT_MOVE_DURATION_MS);
     }
 };
+
+#endif

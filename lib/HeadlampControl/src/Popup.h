@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include "IO.h"
 
+#ifndef POPUP_H
+#define POPUP_H
+
 /**
  * @brief Class defining a popup headlamp and it's interactions
  */
@@ -43,3 +46,5 @@ public:
         downPin->off();
     }
 };
+
+#endif

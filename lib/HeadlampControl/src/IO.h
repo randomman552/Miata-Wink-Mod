@@ -1,5 +1,8 @@
 #include <Arduino.h>
 
+#ifndef IO_H
+#define IO_H
+
 /**
  * @brief Abstract class defining a digital output
  */
@@ -132,3 +135,5 @@ public:
         return _value;
     }
 };
+
+#endif
