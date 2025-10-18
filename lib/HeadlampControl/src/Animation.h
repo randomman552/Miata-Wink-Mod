@@ -1,25 +1,17 @@
 #include <Arduino.h>
 #include "Popup.h"
 
+#define LIGHT_MOVE_DURATION_MS 2000
+
 /**
  * @brief Abstract class defining an animation for the popup headlights
  */
 class Animation
 {
-protected:
-    Popup *_left;
-    Popup *_right;
-
-    Animation(Popup *left, Popup *right)
-        : _left(left), _right(right)
-    {
-    }
-
-public:
     /**
-     * @brief Animate the headlights
+     * @brief Run the animation
      */
-    virtual void Animate();
+    virtual void animate();
 };
 
 /**
@@ -28,14 +20,35 @@ public:
  */
 class UpAnimation : public Animation
 {
+private:
+    Popup *left;
+    Popup *right;
+
 public:
-    void Animate()
+    /**
+     * @brief Construct a new Animation object
+     *
+     * @param left The left headlight
+     * @param right The right headlight
+     */
+    UpAnimation(Popup *left, Popup *right)
+        : left(left), right(right)
     {
-        if (_left == nullptr || _right == nullptr)
+    }
+
+    /**
+     * @brief Run the animation
+     */
+    void animate()
+    {
+        if (left == nullptr || right == nullptr)
             return;
 
-        _left->down();
-        _right->down();
+        left->up();
+        right->up();
+
+        // Wait for lights to move
+        delay(LIGHT_MOVE_DURATION_MS);
     }
 };
 
@@ -44,13 +57,34 @@ public:
  */
 class DownAnimation : public Animation
 {
+private:
+    Popup *left;
+    Popup *right;
+
 public:
-    void Animate()
+    /**
+     * @brief Construct a new Animation object
+     *
+     * @param left The left headlight
+     * @param right The right headlight
+     */
+    DownAnimation(Popup *left, Popup *right)
+        : left(left), right(right)
     {
-        if (_left == nullptr || _right == nullptr)
+    }
+
+    /**
+     * @brief Run the animation
+     */
+    void animate()
+    {
+        if (left == nullptr || right == nullptr)
             return;
 
-        _left->down();
-        _right->down();
+        left->down();
+        right->down();
+
+        // Wait for lights to move
+        delay(LIGHT_MOVE_DURATION_MS);
     }
 };
