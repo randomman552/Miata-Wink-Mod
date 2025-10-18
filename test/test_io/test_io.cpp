@@ -20,7 +20,7 @@ void test_write_low()
 
 void test_read_high()
 {
-    led.on();
+    digitalWrite(LED_BUILTIN, HIGH);
 
     TEST_ASSERT_EQUAL(true, led.isOn());
     TEST_ASSERT_EQUAL(false, led.isOff());
@@ -28,7 +28,7 @@ void test_read_high()
 
 void test_read_low()
 {
-    led.off();
+    digitalWrite(LED_BUILTIN, LOW);
 
     TEST_ASSERT_EQUAL(false, led.isOn());
     TEST_ASSERT_EQUAL(true, led.isOff());
