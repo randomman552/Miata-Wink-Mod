@@ -3,6 +3,7 @@
 #include <unity.h>
 
 DigitalIO led(LED_BUILTIN);
+SimulatedDigitalIO simulated;
 
 void test_write_high()
 {
@@ -34,6 +35,15 @@ void test_read_low()
     TEST_ASSERT_EQUAL(true, led.isOff());
 }
 
+void test_simulated()
+{
+    simulated.on();
+    TEST_ASSERT(simulated.isOn());
+
+    simulated.off();
+    TEST_ASSERT(simulated.isOff());
+}
+
 void setup()
 {
     led.setup();
@@ -48,6 +58,8 @@ void loop()
 
     RUN_TEST(test_read_high);
     RUN_TEST(test_read_low);
+
+    RUN_TEST(test_simulated);
 
     UNITY_END();
 }
