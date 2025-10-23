@@ -3,6 +3,7 @@
 #include <InputManager.h>
 #include <Animation.h>
 #include <AnimationTree.h>
+#include <ActivityMonitor.h>
 
 #define INPUT_PIN 12
 #define INPUT_DELAY 300
@@ -10,6 +11,7 @@
 #define LEFT_DOWN_PIN 10
 #define RIGHT_UP_PIN 9
 #define RIGHT_DOWN_PIN 8
+#define INACTIVITY_TIME 300000
 
 // Create IO
 DigitalIO inputIO(INPUT_PIN);
@@ -22,6 +24,7 @@ DigitalIO rightDownIO(RIGHT_DOWN_PIN);
 Popup leftPopup(&leftUpIO, &leftDownIO);
 Popup rightPopup(&rightUpIO, &rightDownIO);
 InputManager inputManager(&inputIO, INPUT_DELAY);
+ActivityMonitor activityMonitor(INACTIVITY_TIME);
 
 // Create animations
 UpAnimation upAnimation(&leftPopup, &rightPopup);
@@ -34,31 +37,41 @@ AnimationTreeNode root(&upNode, &downNode);
 
 void setup()
 {
-  // Setup hardware
-  inputIO.setup();
-  leftUpIO.setup();
-  leftDownIO.setup();
-  rightUpIO.setup();
-  rightDownIO.setup();
+    // Setup hardware
+    inputIO.setup();
+    leftUpIO.setup();
+    leftDownIO.setup();
+    rightUpIO.setup();
+    rightDownIO.setup();
 
-  // Start serial
-  Serial.begin(9600);
+    // Start serial
+    Serial.begin(9600);
 
-  // Lights down by default
-  downAnimation.animate();
+    // Lights down by default
+    downAnimation.animate();
 }
 
 void loop()
 {
-  // Poll inputs for input sequence
-  auto tick = millis();
-  auto sequence = inputManager.check(tick);
+    // Poll inputs for input sequence
+    auto ticks = millis();
+    auto sequence = inputManager.check(ticks);
 
-  // If set, perform animation and clear sequence
-  if (sequence != nullptr)
-  {
-    auto animation = root.find(sequence);
-    animation->animate();
-    inputManager.clear();
-  }
+    // If set, perform animation and clear sequence
+    if (sequence != nullptr)
+    {
+        activityMonitor.setLastActive(ticks);
+        auto animation = root.find(sequence);
+        animation->animate();
+        inputManager.clear();
+    }
+    else
+    {
+        auto active = activityMonitor.isActive(ticks);
+        if (active)
+        {
+            leftPopup.sleep();
+            rightPopup.sleep();
+        }
+    }
 }
