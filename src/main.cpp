@@ -40,10 +40,12 @@ void setup()
   leftDownIO.setup();
   rightUpIO.setup();
   rightDownIO.setup();
-  inputManager.setup();
 
   // Start serial
   Serial.begin(9600);
+
+  // Lights down by default
+  downAnimation.animate();
 }
 
 void loop()

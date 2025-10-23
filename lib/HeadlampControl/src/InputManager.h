@@ -33,14 +33,6 @@ public:
     }
 
     /**
-     * @brief Setup the input manager
-     */
-    void setup()
-    {
-        _lastState = _input->isOn();
-    }
-
-    /**
      * @brief Check if input has changed and append to sequence
      *
      * @param ticks Number of ticks passed since program start (millis)
